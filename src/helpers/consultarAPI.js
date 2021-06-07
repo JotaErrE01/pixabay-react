@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-const consultarAPI = async termino => {
+const consultarAPI = async (termino, imagenesPagina, paginaActual) => {
 
-    const imagenesPagina = 30;
-
-    const url = `https://pixabay.com/api/?key=21610553-9f6f08ebc7ba0f2edf70ed443&q=${termino}&image_type=photo&per_page=${imagenesPagina}`;
+    const url = `https://pixabay.com/api/?key=21610553-9f6f08ebc7ba0f2edf70ed443&q=${encodeURI(termino)}&image_type=photo&per_page=${imagenesPagina}&page=${paginaActual}`;
     
-    const response = await axios.get(url);
-
-    return(response.data.hits);
-
+    try {
+        const response = await axios.get(url);
+        return(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+    return null;
 }
  
 export default consultarAPI;
